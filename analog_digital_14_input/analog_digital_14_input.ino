@@ -79,6 +79,7 @@ int moisture2OutputValue = 0;
 int vibration1OutputValue = 0;
 int vibration2OutputValue = 0;
 int photoresistor1OutputValue = 0;
+int photoresistor15OutputValue = 0;
 
 
 void setup() {
@@ -137,7 +138,8 @@ void loop() {
   moisture2OutputValue = map(moisture2ReadValue, 0, 1023, 61, 100);
   vibration1OutputValue = map(vibration1ReadValue, 0, 1023, 101, 140);
   vibration2OutputValue = map(vibration2ReadValue, 0, 1023, 141, 180);
-  photoresistor1OutputValue = map(photoresistor1ReadValue, 0, 1023, 181, 220);
+  photoresistor1OutputValue = map(photoresistor1ReadValue, 0, 1023, 181, 210);
+  photoresistor15OutputValue = map(photoresistor1ReadValue, 0, 1023, 211, 240);
 
 //change the analog out value:
   analogWrite(analogOutPin0, moisture1OutputValue);
@@ -256,8 +258,14 @@ Serial.write(moisture2OutputValue);
 Serial.write(vibration1OutputValue);
 //Vibration 2
 Serial.write(vibration2OutputValue);
-//Photoresistor
+//Photoresistor for Volume
 Serial.write(photoresistor1OutputValue);
+//Photoresistor for Granulation
+if(photoresistor15OutputValue < 211) {
+  Serial.write(210);
+} else {
+  Serial.write(photoresistor15OutputValue);
+}
 
 ////Print results to serial monitor
 ////Moisture 1
